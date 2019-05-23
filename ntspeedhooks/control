@@ -1,0 +1,8 @@
+Package: com.julioverne.ntspeed
+Name: Ntspeed
+Depends: mobilesubstrate
+Version: 2.0
+Architecture: iphoneos-arm
+Maintainer: Julioverne, kasiimh1
+Author: Julioverne, kasiimh1
+Section: Tweaks

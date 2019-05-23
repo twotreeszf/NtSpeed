@@ -1,16 +1,13 @@
-include theos/makefiles/common.mk
+include ~/theos/makefiles/common.mk
 
-TWEAK_NAME = NtSpeed
-NtSpeed_FILES = /mnt/d/codes/ntspeed/ntspeedhooks/Tweak.xm
-NtSpeed_FRAMEWORKS = CydiaSubstrate Foundation UIKit CoreGraphics
-#NtSpeed_CFLAGS = -fobjc-arc
-NtSpeed_LDFLAGS = -Wl,-segalign,4000
+TWEAK_NAME = Ntspeed
+Ntspeed_FILES = ../ntspeedhooks/Tweak.xm
+Ntspeed_FRAMEWORKS = CydiaSubstrate Foundation UIKit CoreGraphics
 
-NtSpeed_ARCHS = armv7 arm64
-export ARCHS = armv7 arm64
+NtSpeed_ARCHS = arm64 arm64e
+export ARCHS = arm64 arm64e
 
 include $(THEOS_MAKE_PATH)/tweak.mk
 	
-	
-all::
-	
+after-install::
+	install.exec "killall -9 SpringBoard backboardd"

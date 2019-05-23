@@ -17,8 +17,8 @@ static BOOL Enabled;
 static int kWidth = 40;
 static int kHeight = 15;
 
-static int kLocX = 5;
-static int kLocY = 20;
+static int kLocX = 10;
+static int kLocY = 35;
 
 static float kAlpha = 0.5f;
 static float kRadius = 6;
@@ -177,14 +177,14 @@ __strong static id _sharedObject;
 			
 			content = [UIView new];
 			content.alpha = 0.9f;
-			content.frame = CGRectMake(4, 0, springboardWindow.frame.size.width-8, springboardWindow.frame.size.height);
-			label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, content.frame.size.width, content.frame.size.height)];
+			content.frame = CGRectMake(0, 0, springboardWindow.frame.size.width, springboardWindow.frame.size.height);
+			label = [[UILabel alloc]initWithFrame:CGRectMake(2, -3, content.frame.size.width, content.frame.size.height)];
 			[self update];
 			label.numberOfLines = 1;
 			label.textColor = [UIColor whiteColor];
 			label.baselineAdjustment = YES;
 			label.adjustsFontSizeToFitWidth = YES;
-			label.adjustsLetterSpacingToFitWidth = YES;
+			[label sizeToFit];
 			label.textAlignment = NSTextAlignmentCenter;
 			[content addSubview:label];
 			[(UIView *)springboardWindow addSubview:content];
@@ -208,8 +208,8 @@ __strong static id _sharedObject;
 	springboardWindow.layer.cornerRadius = kRadius;
 	springboardWindow.frame = CGRectMake(0, 0, kWidth, kHeight);
 	backView.frame = CGRectMake(0, 0, springboardWindow.frame.size.width, springboardWindow.frame.size.height);
-	content.frame = CGRectMake(4, 0, springboardWindow.frame.size.width-8, springboardWindow.frame.size.height);
-	label.frame = CGRectMake(0, 0, content.frame.size.width, content.frame.size.height);
+	content.frame = CGRectMake(0, 0, springboardWindow.frame.size.width, springboardWindow.frame.size.height);
+	label.frame = CGRectMake(2, -3, content.frame.size.width, content.frame.size.height);
 	forceNewLocation = YES;
 	[springboardWindow setHidden:NO];
 	[self orientationChanged];
@@ -305,8 +305,8 @@ static void settingsChanged(CFNotificationCenterRef center, void *observer, CFSt
 	@autoreleasepool {		
 		NSDictionary *TweakPrefs = [[[NSDictionary alloc] initWithContentsOfFile:@PLIST_PATH_Settings]?:[NSDictionary dictionary] copy];
 		Enabled = (BOOL)[[TweakPrefs objectForKey:@"Enabled"]?:@YES boolValue];
-		int newkLocX = (int)[[TweakPrefs objectForKey:@"kLocX"]?:@(5) intValue];
-		int newkLocY = (int)[[TweakPrefs objectForKey:@"kLocY"]?:@(20) intValue];
+		int newkLocX = (int)[[TweakPrefs objectForKey:@"kLocX"]?:@(15) intValue];
+		int newkLocY = (int)[[TweakPrefs objectForKey:@"kLocY"]?:@(40) intValue];
 		int newkWidth = (int)[[TweakPrefs objectForKey:@"kWidth"]?:@(40) intValue];
 		int newkHeight = (int)[[TweakPrefs objectForKey:@"kHeight"]?:@(15) intValue];
 		float newkAlpha = (float)[[TweakPrefs objectForKey:@"kAlpha"]?:@(0.5) floatValue];

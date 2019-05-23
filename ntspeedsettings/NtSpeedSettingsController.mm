@@ -1,6 +1,7 @@
 #import <notify.h>
 #import <Social/Social.h>
 #import <prefs.h>
+#import <spawn.h>
 
 #define PLIST_PATH_Settings "/var/mobile/Library/Preferences/com.julioverne.ntspeed.plist"
 
@@ -10,8 +11,6 @@
 }
 - (void)HeaderCell;
 @end
-
-
 
 @implementation NtSpeedSettingsController
 - (id)specifiers {
@@ -216,6 +215,7 @@
 	}
 	return _specifiers;
 }
+/*
 - (void)twitter
 {
 	UIApplication *app = [UIApplication sharedApplication];
@@ -227,6 +227,7 @@
 		[app openURL:[NSURL URLWithString:@"https://mobile.twitter.com/ijulioverne"]];
 	}
 }
+
 - (void)love
 {
 	SLComposeViewController *twitter = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
@@ -235,6 +236,7 @@
 		[[self navigationController] presentViewController:twitter animated:YES completion:nil];
 	}
 }
+*/
 - (void)reset
 {
 	[@{} writeToFile:@PLIST_PATH_Settings atomically:YES];
@@ -249,17 +251,23 @@
 		[CydiaEnablePrefsCheck writeToFile:@PLIST_PATH_Settings atomically:YES];
 		notify_post("com.julioverne.ntspeed/Settings");
 		if ([[specifier properties] objectForKey:@"PromptRespring"]) {
-			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:self.title message:@"An Respring is Requerid for this option." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Respring", nil];
-			alert.tag = 55;
-			[alert show];
+		//	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:self.title message:@"An Respring is Requerid for this option." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Respring", nil];
+		//	alert.tag = 55;
+		//	[alert show];
 		}
 	}
 }
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+- (void)alertView:(UIAlertController *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
+	/*
     if (alertView.tag == 55 && buttonIndex == 1) {
-        system("killall backboardd SpringBoard");
+        pid_t pid;
+		int status;
+		const char* args[] = {"killall", "-9", "backboardd SpringBoard", NULL};
+		posix_spawn(&pid, "/usr/bin/killall", NULL, NULL, (char* const*)args, NULL);
+		waitpid(pid, &status, WEXITED);
     }
+	*/
 }
 - (id)readPreferenceValue:(PSSpecifier*)specifier
 {
@@ -303,7 +311,7 @@
 		[headerView addSubview:_label];
 		[headerView addSubview:underLabel];
 		
-	[_table setTableHeaderView:headerView];
+	//[_table setTableHeaderView:headerView];
 	
 	[NSTimer scheduledTimerWithTimeInterval:0.5
                                      target:self
@@ -317,7 +325,7 @@
 {
 	[super loadView];
 	self.title = @"NtSpeed";	
-	[UISwitch appearanceWhenContainedIn:self.class, nil].onTintColor = [UIColor colorWithRed:0.09 green:0.99 blue:0.99 alpha:1.0];
+	[UISwitch appearanceWhenContainedInInstancesOfClasses:self.class].onTintColor = [UIColor colorWithRed:0.09 green:0.99 blue:0.99 alpha:1.0];
 	UIButton *heart = [[UIButton alloc] initWithFrame:CGRectZero];
 	[heart setImage:[[UIImage alloc] initWithContentsOfFile:[[self bundle] pathForResource:@"Heart" ofType:@"png"]] forState:UIControlStateNormal];
 	[heart sizeToFit];
